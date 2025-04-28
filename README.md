@@ -1,33 +1,35 @@
 # Fawry Task
 
-## Q1: Custom Command (mygrep.sh)
+# Reflective Section
 
-### Reflective Section
+### How the Script Handles Arguments and Options
 
-#### How the Script Handles Arguments and Options
+1. **Help Option**: The script begins by checking if the user has requested help (`--help`). If so, it displays the usage instructions and exits.
 
-1. **Help Option**: The script first checks if the user requested help (`--help`) and displays the usage instructions.
-2. **Argument Validation**: It verifies that enough arguments are passed. If not, an error message is printed, and the script exits.
-3. **Option Handling**: If the first argument starts with a dash (`-`), it treats it as an option (e.g., `-n`, `-v`). The second argument is the search string, and the third is the filename.
-4. **String and Filename Validation**: The script ensures both the search string and the filename are provided and valid.
-5. **Default Behavior**: If no options are given, the script assumes the first argument is the search string and the second is the filename.
-6. **File Existence Check**: It checks if the specified file exists. If not, an error message is displayed, and the script exits.
-7. **Building the Command**: Based on the options, it constructs the appropriate `grep` command:
-   - `-i` for case-insensitive search
-   - `-n` for showing line numbers
-   - `-v` for inverting the match
-8. **Execution**: Finally, it runs the `grep` command with the collected options.
+2. **Argument Validation**: It verifies that sufficient arguments are provided. If not, an error message is printed, and the script exits.
 
-#### Supporting Regex or -i/-c/-l Options
+3. **Option Handling**: If the first argument begins with a dash (`-`), it is treated as an option (e.g., `-n`, `-v`). The second argument is designated as the search string, and the third as the filename.
 
-To support regex or options like `-i`, `-c`, or `-l`, I would modify the script to loop through all arguments and process each option individually. Instead of assuming a fixed order, the script would dynamically detect and apply multiple options. This approach would enhance flexibility and allow easy extension for features like counting matches or listing filenames, making the script behave more like the actual `grep` tool.
+4. **String and Filename Validation**: The script ensures that both the search string and the filename are provided. If either is missing, it prints an error message and exits.
 
-#### What Was the Hardest Part and Why?
+5. **Default Behavior**: If no options are specified, the script assumes the first argument is the search string and the second is the filename.
 
-The most challenging aspect was properly handling invalid input. This is tricky because users might:
+6. **File Existence Check**: It checks if the specified file exists. If the file is not found, an error message is displayed, and the script exits.
+
+7. **Building the Command**: Based on the provided options, the script constructs the appropriate search logic. It uses case-insensitive comparison and handles line numbering and inverted matching as specified by the flags.
+
+8. **Execution**: Finally, the script processes the file line by line, applying the constructed logic to match and display the appropriate lines.
+
+### Supporting Regex or -i/-c/-l Options
+
+To support regex or additional options like `-i`, `-c`, or `-l`, I would modify the script to loop through all arguments, processing each option individually. This would allow for dynamic detection and application of multiple options, rather than assuming a fixed order. Such an approach would enhance flexibility and enable features like counting matches or listing filenames, making the script behave more like the actual `grep` tool.
+
+### What Was the Hardest Part and Why?
+
+The most challenging aspect was effectively handling invalid input. This includes scenarios where users might:
 
 - Forget to provide the search string
 - Mix up options and filenames
-- Supply too few arguments or a non-existent file
+- Supply too few arguments or reference a non-existent file
 
-The challenge was to maintain simplicity while accurately catching and reporting these different errors without cluttering the code. Effective error checking significantly improved the script's reliability and user-friendliness.
+The challenge lay in maintaining simplicity while accurately capturing and reporting these various errors. Ensuring robust error checking significantly improved the script's reliability and user-friendliness, requiring careful consideration in the design of the validation logic.
