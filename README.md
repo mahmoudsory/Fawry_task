@@ -26,4 +26,4 @@ The user might forget the search string.
 They might mix up options and filenames.
 They might provide too few arguments, or a non-existent file.
 The challenge was to keep the script simple while still correctly catching and reporting all these different errors — without making the code look messy or complicated.
-Good error checking made the script much more reliable and user-friendly.
+Good error checking made the script much more reliable and user-friendly
