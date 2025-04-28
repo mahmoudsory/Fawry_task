@@ -9,7 +9,10 @@ The second argument becomes the search string, and the third becomes the filenam
 It validates that both the search string and the filename are provided and correct.
 If no options are given, the script assumes the first argument is the search string and the second is the filename.
 It checks if the specified file exists. If not, it shows an error and exits.
-Based on the options, it builds the appropriate grep command (-i for case-insensitive, -n for showing line numbers, -v for inverting the match).
+Based on the options, it builds the appropriate grep command:
+-i for case-insensitive search,
+-n for showing line numbers,
+-v for inverting the match.
 Finally, it runs the grep command with the collected options.
 Supporting Regex or -i/-c/-l Options
 If I were to support regex or -i/-c/-l options, I would modify the script to loop through all arguments and process each option individually.
