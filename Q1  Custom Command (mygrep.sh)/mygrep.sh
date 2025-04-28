@@ -48,16 +48,49 @@ if [[ ! -f "$file" ]]; then
     exit 1
 fi
 
-# Build the grep command options based on user input
-grep_options="-i"  # Always search case-insensitively
+# Convert search string to lowercase for case-insensitive search
+search=$(echo "$search" | tr '[:upper:]' '[:lower:]')
 
-if [[ "$options" == *v* ]]; then
-    grep_options="$grep_options -v"  # Invert the match if -v is used
+# Initialize line counter
+line_number=0
+found_match=false
+
+# Read the file line by line
+while IFS= read -r line; do
+    # Increment line number
+    line_number=$((line_number + 1))
+
+    # Convert line to lowercase for case-insensitive comparison
+    lower_line=$(echo "$line" | tr '[:upper:]' '[:lower:]')
+
+    # Check if the line matches the search string
+    if [[ "$lower_line" == *"$search"* ]]; then
+        match=true
+    else
+        match=false
+    fi
+
+    # Invert match if -v is used
+    if [[ "$options" == *v* ]]; then
+        if [[ $match == true ]]; then
+            match=false
+        else
+            match=true
+        fi
+    fi
+
+    # Print the line if it matches the criteria
+    if [[ $match == true ]]; then
+        found_match=true
+        if [[ "$options" == *n* ]]; then
+            echo "$line_number: $line"
+        else
+            echo "$line"
+        fi
+    fi
+done < "$file"
+
+# If no match was found, exit with status 1
+if [[ $found_match == false ]]; then
+    exit 1
 fi
-
-if [[ "$options" == *n* ]]; then
-    grep_options="$grep_options -n"  # Show line numbers if -n is used
-fi
-
-# Finally, run the grep command with the built options
-grep $grep_options -- "$search" "$file"
